@@ -18,11 +18,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.example.funfacts.data.UserDataUiEvents
 import com.example.funfacts.ui.TextComponent
+import com.example.funfacts.ui.TextFieldComponent
 import com.example.funfacts.ui.TopBar
+import com.example.funfacts.ui.UserInputViewModel
 
 @Composable
-fun UserInputScreen() {
+fun UserInputScreen(userInputViewModel: UserInputViewModel) {
     Surface(
         modifier = Modifier.fillMaxSize()
     ) {
@@ -45,6 +48,18 @@ fun UserInputScreen() {
                         " input provided by you !",
                 textSize = 18.sp
             )
+
+            Spacer(modifier = Modifier.size(60.dp))
+
+            TextComponent(textValue = "Name", textSize = 18.sp)
+
+            Spacer(modifier = Modifier.size(10.dp))
+
+            TextFieldComponent(onTextChange = {
+                userInputViewModel.onEvent(
+                    UserDataUiEvents.UserNameEntered(it)
+                )
+            })
         }
     }
 }
@@ -52,5 +67,5 @@ fun UserInputScreen() {
 @Preview
 @Composable
 fun UserInputScreenPreview() {
-    UserInputScreen()
+    UserInputScreen(userInputViewModel = UserInputViewModel())
 }
